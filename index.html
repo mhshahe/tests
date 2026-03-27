@@ -1,467 +1,603 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>العلوم المتكاملة · بنك أسئلة متقدم</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, 'Times New Roman', sans-serif;
-    }
-    body {
-      background: linear-gradient(145deg, #f0f5fa 0%, #e6edf4 100%);
-      min-height: 100vh;
-      padding: 30px 20px;
-      direction: rtl;
-    }
-    .master-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(4px);
-      border-radius: 48px 48px 40px 40px;
-      box-shadow: 0 30px 60px rgba(0, 30, 60, 0.2);
-      overflow: hidden;
-      padding: 25px 25px 35px 25px;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-    h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      color: #0f3b5a;
-      padding-right: 25px;
-      border-right: 8px solid #1d7ca1;
-      margin-bottom: 5px;
-      letter-spacing: -0.5px;
-    }
-    .sub {
-      font-size: 1rem;
-      color: #2d5779;
-      padding-right: 33px;
-      margin-bottom: 30px;
-      font-style: italic;
-    }
-    /* ترويسة القسم */
-    .section-header {
-      padding: 16px 22px;
-      border-radius: 50px;
-      background: #1d7ca1;
-      color: white;
-      font-size: 1.7rem;
-      font-weight: 700;
-      margin: 35px 0 25px 0;
-      display: inline-block;
-      box-shadow: 0 6px 14px rgba(28, 110, 150, 0.4);
-    }
-    .section-header span {
-      font-size: 1rem;
-      background: #ffd966;
-      color: #0e3e5c;
-      padding: 4px 14px;
-      border-radius: 40px;
-      margin-right: 18px;
-    }
-    /* بطاقة السؤال */
-    .q-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-    .q-card {
-      border-radius: 36px;
-      padding: 22px 28px;
-      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-      border: 2px solid transparent;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      backdrop-filter: blur(2px);
-    }
-    .q-card:hover {
-      transform: scale(1.01) translateY(-4px);
-      border-color: #ffffff;
-      box-shadow: 0 20px 30px rgba(0, 60, 100, 0.25);
-    }
-    /* ألوان مختلفة للأقسام */
-    .exam-a { background: #e3f0fd; }  /* أزرق فاتح */
-    .exam-b { background: #e0f5e8; }  /* أخضر فاتح */
-    .exam-c { background: #fff2cf; }  /* أصفر فاتح */
-    .bank   { background: #f8e9f0; }  /* زهري فاتح */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات البرمجة والذكاء الاصطناعي | المهندس محمد محمود شاهين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .q-num {
-      display: inline-block;
-      background: rgba(0,0,0,0.06);
-      padding: 5px 20px;
-      border-radius: 40px;
-      font-weight: 600;
-      color: #1d4663;
-      margin-bottom: 12px;
-      font-size: 0.9rem;
-    }
-    .q-text {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #02263c;
-      margin-bottom: 22px;
-      line-height: 1.6;
-    }
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .opt {
-      display: flex;
-      align-items: baseline;
-      gap: 15px;
-      background: rgba(255,255,255,0.6);
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-size: 1.05rem;
-      color: #103e5c;
-      border: 1px solid rgba(255,255,255,0.8);
-      backdrop-filter: blur(4px);
-    }
-    .opt-letter {
-      background: #2d7096;
-      color: white;
-      width: 34px;
-      height: 34px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .hint-btn {
-      background: transparent;
-      border: 2px dashed #236d97;
-      color: #1b577b;
-      font-weight: 600;
-      padding: 14px 25px;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      width: fit-content;
-      transition: 0.25s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .hint-btn:hover {
-      background: #236d97;
-      color: white;
-      border: 2px solid #236d97;
-    }
-    .explain-box {
-      background: #fafffe;
-      border-right: 6px solid #1b7a56;
-      padding: 20px 28px;
-      border-radius: 30px;
-      margin-top: 22px;
-      font-size: 1rem;
-      color: #02422b;
-      line-height: 1.8;
-      display: none;
-      box-shadow: inset 0 0 0 1px #bbdfce;
-    }
-    .explain-box.show {
-      display: block;
-    }
-    .correct-tag {
-      background: #147a56;
-      color: white;
-      padding: 5px 18px;
-      border-radius: 40px;
-      display: inline-block;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-    /* زر التقييم */
-    .eval-area {
-      margin: 50px 0 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .eval-btn {
-      background: #1a4863;
-      border: none;
-      color: white;
-      padding: 18px 42px;
-      border-radius: 70px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 10px 20px #0d3b4f;
-      transition: 0.2s;
-    }
-    .eval-btn:hover {
-      background: #0d3b4f;
-      transform: scale(1.02);
-    }
-    .eval-result {
-      background: #10344a;
-      color: #eefbff;
-      padding: 18px 32px;
-      border-radius: 60px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      text-align: center;
-    }
-    .footer {
-      margin-top: 60px;
-      text-align: center;
-      color: #1a4e6e;
-      border-top: 2px solid #bed9ec;
-      padding-top: 30px;
-      font-size: 1.1rem;
-    }
-    .footer strong {
-      color: #0b3047;
-    }
-  </style>
+        :root {
+            --primary: #0a2b3e;
+            --primary-dark: #051e2c;
+            --secondary: #1e6f5c;
+            --accent: #e9a23b;
+            --success: #2c8c5e;
+            --danger: #c44536;
+            --light: #f4f7fc;
+            --gray: #eef2f5;
+            --dark: #1e2a36;
+            --shadow: 0 8px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+            background: linear-gradient(145deg, #e9f0f5 0%, #dde5ed 100%);
+            padding: 25px 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* الهيدر مع الصورة */
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary), #154256);
+            border-radius: 38px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .hero-header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .profile-frame {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 4px solid var(--accent);
+            background: white;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        .profile-frame:hover {
+            transform: scale(1.02);
+            border-color: #f5b042;
+        }
+        .profile-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-text {
+            color: white;
+            flex: 1;
+        }
+        .hero-text h1 {
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+        .designer-badge {
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        /* أزرار التنقل */
+        .exam-tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .exam-btn {
+            background: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            color: var(--primary);
+            font-family: inherit;
+        }
+        .exam-btn.active {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 6px 14px rgba(30,111,92,0.3);
+            transform: scale(1.02);
+        }
+        .exam-btn:hover:not(.active) {
+            background: var(--gray);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        /* لوحة النتائج */
+        .stats-panel {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 24px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .stats-panel:hover {
+            transform: translateY(-2px);
+        }
+        .score-box {
+            background: var(--primary);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+        .reset-exam, .send-whatsapp {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        .send-whatsapp {
+            background: #25D366;
+        }
+        .reset-exam:hover, .send-whatsapp:hover {
+            transform: scale(0.96) translateY(-2px);
+            filter: brightness(1.05);
+        }
+        .level-report {
+            background: var(--light);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* خلفيات الاختبارات المختلفة */
+        .quiz-container[data-exam="A"] .quiz-card { background: linear-gradient(145deg, #ffffff, #fef9e6); border-right-color: #2c7da0; }
+        .quiz-container[data-exam="B"] .quiz-card { background: linear-gradient(145deg, #ffffff, #e8f0fe); border-right-color: #1e6f5c; }
+        .quiz-container[data-exam="C"] .quiz-card { background: linear-gradient(145deg, #ffffff, #f3e8ff); border-right-color: #9b59b6; }
+        .quiz-container[data-exam="D"] .quiz-card { background: linear-gradient(145deg, #ffffff, #ffe8e0); border-right-color: #e67e22; }
+
+        /* بطاقات الأسئلة */
+        .quiz-card {
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+        }
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            background: rgba(255,255,255,0.7);
+            padding: 12px 18px;
+            border-radius: 20px;
+            line-height: 1.5;
+        }
+        /* محرر الأكواد LTR */
+        .code-editor {
+            direction: ltr;
+            text-align: left;
+            background: #1e2a36;
+            color: #f8f8f2;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            padding: 14px 18px;
+            border-radius: 20px;
+            margin: 12px 0 16px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border-left: 4px solid var(--accent);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 650px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        .option-label {
+            background: rgba(255,255,255,0.8);
+            padding: 12px 16px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            font-weight: 500;
+            backdrop-filter: blur(2px);
+        }
+        .option-label:hover {
+            background: white;
+            transform: translateX(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .option-label input {
+            margin-left: 14px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .check-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            margin-top: 8px;
+        }
+        .check-btn:disabled {
+            background: #b9c7d4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .check-btn:hover:not(:disabled) {
+            background: #0f5445;
+            transform: scale(0.98) translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .feedback {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            animation: fadeInUp 0.3s ease;
+        }
+        .feedback.correct {
+            background: #d9f0e3;
+            color: #1a6e4a;
+            border-right: 5px solid var(--success);
+        }
+        .feedback.wrong {
+            background: #ffe0db;
+            color: #b33a2a;
+            border-right: 5px solid var(--danger);
+        }
+        .feedback.warning {
+            background: #feefce;
+            color: #b86f0c;
+        }
+        .hint-section {
+            margin-top: 12px;
+        }
+        .hint-btn {
+            background: rgba(0,0,0,0.05);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .hint-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.02);
+        }
+        .hint-content {
+            background: #fef5e0;
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #a46b1a;
+            border-right: 3px solid var(--accent);
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        .hint-content.show {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .designer-footer {
+            background: var(--primary);
+            color: white;
+            border-radius: 28px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .designer-footer:hover {
+            transform: translateY(-3px);
+        }
+        .designer-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 6px;
+            transition: 0.2s;
+        }
+        .designer-footer a:hover {
+            text-decoration: underline;
+            color: #f5b042;
+        }
+        .links {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+    </style>
 </head>
 <body>
-<div class="master-container">
-  <h1>🧪 العلوم المتكاملة <br><span style="font-size: 1.3rem;">الامتحانات الشاملة + بنك الـ 50 سؤالاً</span></h1>
-  <div class="sub"> ⚡ نماذج مطابقة لمواصفات الثانوية العامة (الصف الأول الثانوي – الفصل الثاني)</div>
+<div class="container">
+    <div class="hero-header">
+        <div class="profile-frame">
+            <img src="https://cdn.jsdelivr.net/gh/mhshahen6/mh_photo@main/1770841296798.webp" alt="المهندس محمد محمود شاهين">
+        </div>
+        <div class="hero-text">
+            <h1>🧠 اختبارات البرمجة والذكاء الاصطناعي</h1>
+            <p>أعدها خبير البرمجة والذكاء الاصطناعي بالتربية والتعليم</p>
+            <div class="designer-badge">🎓 المهندس محمد محمود شاهين | 01029966799</div>
+        </div>
+    </div>
 
-  <div id="questionsArea" class="q-grid"></div>
+    <div class="exam-tabs">
+        <button class="exam-btn active" data-exam="A">📘 النموذج (A) - الأساسي</button>
+        <button class="exam-btn" data-exam="B">📙 النموذج (B) - المتوسط</button>
+        <button class="exam-btn" data-exam="C">📕 النموذج (C) - المتقدم</button>
+        <button class="exam-btn" data-exam="D">📗 النموذج (D) - الشامل</button>
+    </div>
 
-  <div class="eval-area">
-    <button class="eval-btn" onclick="calculatePerformance()">📊 تقييم أدائي</button>
-    <div id="performanceDisplay" class="eval-result">أنتظر تقييمك...</div>
-  </div>
+    <div class="stats-panel">
+        <span>🏆 مجموع النقاط</span>
+        <span class="score-box" id="scoreDisplay">0 / 0</span>
+        <span id="levelMessage" class="level-report">✨ لم تبدأ بعد</span>
+        <button class="reset-exam" id="resetExamBtn">🔄 إعادة الاختبار</button>
+        <button class="send-whatsapp" id="whatsappShareBtn">📲 إرسال النتيجة للواتساب</button>
+    </div>
 
-  <div class="footer">
-    <p>✧ أُعد بعناية بواسطة ✧<br>
-    <strong>مهندس محمد محمود شاهين</strong><br>
-    بإهداء إلى الطالب <span style="color:#ad7d3d;">عبد الرحمن محمد محمود شاهين</span></p>
-  </div>
+    <div id="quizContainer" class="quiz-container" data-exam="A"></div>
+
+    <div class="designer-footer">
+        <div>🏅 المهندس محمد محمود شاهين | خبير البرمجة والذكاء الاصطناعي بالتربية والتعليم</div>
+        <div class="links">
+            <a href="https://mhshahe.github.io/cv/" target="_blank">السيرة الذاتية</a> |
+            <a href="https://mhshahe.github.io/Egyptian_bacaloria/" target="_blank">البكالوريا المصرية</a> |
+            <a href="https://mhshahe.github.io/Azkar/" target="_blank">الأذكار</a> |
+            <a href="https://deira1.blogspot.com/p/portfolio.html" target="_blank">بورتفوليو</a> |
+            <a href="https://aicolen.blogspot.com" target="_blank">أكاديمية AI Masters</a>
+        </div>
+        <div style="margin-top: 12px; font-size:0.8rem;">📞 تواصل: 01029966799 | ✉️ mhshahen6@gmail.com</div>
+        <div style="margin-top: 8px;">✨ وفقكم الله في رحلة البرمجة والذكاء الاصطناعي ✨</div>
+    </div>
 </div>
 
 <script>
-// ---------- بيانات الأسئلة (80 سؤالاً) ----------
-const questions = [
-  // ========== الامتحان A ==========
-  { section: "A", q: "أي من المركبات التالية تُمثل 'عملة الطاقة' المباشرة التي تستخدمها الخلية لإتمام أنشطتها الحيوية؟",
-    opts: ["أ) الجلوكوز.", "ب) الجليكوجين.", "ج) ATP.", "د) النشا."], correct: "ج", 
-    exp: "ATP هو المصدر المباشر للطاقة في الخلايا؛ حيث يتم تحرير الطاقة عند كسر الرابطة بين الفوسفات الثانية والثالثة." },
-  { section: "A", q: "عند دراسة حركة الدم في الجهاز الدوري، أي الحجرات القلبية التالية تتحمل الجهد الأكبر لدفع الدم الغني بالأكسجين إلى أبعد نقطة في الجسم؟",
-    opts: ["أ) الأذين الأيمن.", "ب) البطين الأيمن.", "ج) الأذين الأيسر.", "د) البطين الأيسر."], correct: "د",
-    exp: "البطين الأيسر يضخ الدم المحمل بالأكسجين عبر الشريان الأورطي إلى جميع أجزاء الجسم، لذا جداره العضلي هو الأكثر سمكاً." },
-  { section: "A", q: "إذا تعرض نبات لفقاعة هوائية كبيرة داخل أحد أوعية الخشب، فإن التأثير المباشر والأسرع لذلك هو:",
-    opts: ["أ) توقف نقل السكريات من الأوراق للجذور.", "ب) انقطاع عمود الماء وتوقف قوى التماسك في هذا الوعاء.", "ج) زيادة معدل البناء الضوئي لتعويض الفاقد.", "د) تحفيز قوى التلاصق لسحب الماء بدلاً من التماسك."], correct: "ب",
-    exp: "الخشب يعتمد على خاصية التماسك بين جزيئات الماء (روابط هيدروجينية)؛ الفقاعة تقطع العمود وتمنع صعود الماء." },
-  { section: "A", q: "رياضي يمارس رياضة رفع الأثقال العنيفة. بعد انتهاء التدريب، شعر بإجهاد عضلي شديد. السبب الكيميائي الدقيق لهذا الإجهاد هو:",
-    opts: ["أ) تراكم حمض اللاكتيك نتيجة التنفس اللاهوائي في غياب الأكسجين.", "ب) تراكم الكحول الإيثيلي نتيجة التخمر الكحلي.", "ج) استهلاك كامل جزيئات ATP المتاحة وتوقف التنفس الهوائي.", "د) زيادة نسبة غاز ثاني أكسيد الكربون في العضلات."], correct: "أ",
-    exp: "عند نقص الأكسجين، تتحول العضلات للتنفس اللاهوائي منتجة حمض اللاكتيك الذي يسبب الإجهاد والتعب." },
-  { section: "A", q: "إذا علمت أن المحتوى الحراري لمتفاعلات تفاعل ما (مثل احتراق الميثانول) أعلى من المحتوى الحراري لنواتجه، فإن التغير في المحتوى الحراري (∆H) وإشارة التفاعل تكون:",
-    opts: ["أ) موجبة، والتفاعل ماص للحرارة.", "ب) سالبة، والتفاعل طارد للحرارة.", "ج) موجبة، والتفاعل طارد للحرارة.", "د) سالبة، والتفاعل ماص للحرارة."], correct: "ب",
-    exp: "∆H = طاقة النواتج - طاقة المتفاعلات. إذا كانت النواتج أقل طاقة، يكون ∆H سالباً والتفاعل طارداً للحرارة." },
-  { section: "A", q: "يعاني مريض من نقص شديد في كمية الماء بالدم (جفاف)، مما أدى إلى ارتفاع ضغط دمه. التفسير الفيزيائي الدقيق لذلك هو:",
-    opts: ["أ) انخفاض مرونة الأوعية الدموية.", "ب) نقص عدد خلايا الدم الحمراء.", "ج) زيادة تركيز الذائبات مما رفع لزوجة الدم وزاد مقاومته للتدفق.", "د) انخفاض كثافة الدم مما تطلب قوة ضخ أقل."], correct: "ج",
-    exp: "الجفاف يزيد تركيز المواد الذائبة في الدم مما يرفع لزوجته، وبالتالي ترتفع مقاومة التدفق ويرتفع الضغط." },
-  { section: "A", q: "بناءً على قانون بقاء الطاقة في الشبكات الغذائية، إذا كان مستوى المنتجات يحتوي على 100,000 وحدة طاقة، فإن الطاقة التقريبية التي تصل إلى المستهلك الثانوي (آكلات اللحوم الأولى) هي:",
-    opts: ["أ) 10,000 وحدة.", "ب) 1,000 وحدة.", "ج) 100 وحدة.", "د) 10 وحدات."], correct: "ب",
-    exp: "عند الانتقال من مستوى غذائي للآخر يُفقد 90% من الطاقة. المنتجات 100,000 → مستهلك أول 10,000 → مستهلك ثانوي 1,000." },
-  { section: "A", q: "عند استخدام تقنية 'كريسبر-كاس9' (CRISPR-Cas9) لعلاج فقر الدم المنجلي، فإن التعديل الجزيئي يتم أساسًا على مستوى:",
-    opts: ["أ) القواعد النيتروجينية في الحمض النووي DNA.", "ب) الروابط الببتيدية في البروتينات.", "ج) السكر الخماسي في الحمض النووي RNA.", "د) الفوسفوليبيدات في الغشاء الخلوي."], correct: "أ",
-    exp: "كريسبر هو نظام تعديل جيني يعمل على قطع وتحرير تسلسل DNA (القواعد النيتروجينية) بدقة." },
-  { section: "A", q: "تعرضت صخور تحتوي على معدن الكالسيت (CaCO₃) لأمطار محملة بغاز ثاني أكسيد الكربون لفترات طويلة. النتيجة الجيولوجية المتوقعة هي:",
-    opts: ["أ) تحول الكالسيت إلى كوارتز شديد الصلابة.", "ب) تفكك الروابط الأيونية وتكوين بيكربونات الكالسيوم الذائبة محدثة تجاويف.", "ج) زيادة صلابة الصخر بسبب التجوية الميكانيكية.", "د) عدم تأثر الصخر لأن الروابط الأيونية تقاوم الأحماض الضعيفة."], correct: "ب",
-    exp: "يتفاعل CO₂ مع ماء المطر مكوناً حمض الكربونيك الذي يذيب كربونات الكالسيوم (الكالسيت) مكوناً بيكربونات الكالسيوم الذائبة، مسبباً الكهوف." },
-  { section: "A", q: "من التطبيقات النانوية الحديثة استخدام 'النقاط الكمومية' (Quantum Dots). تُصنف هذه المواد هندسيًا على أنها:",
-    opts: ["أ) مواد أحادية البعد النانوي.", "ب) مواد ثنائية الأبعاد النانوية.", "ج) مواد ثلاثية الأبعاد النانوية.", "د) مواد صفرية الأبعاد النانوية."], correct: "د",
-    exp: "النقاط الكمومية جسيمات نانوية متناهية الصغر محصورة في الأبعاد الثلاثة، لذا تصنف 0D." },
+    // ----------------------- بنك الأسئلة المعاد تصميمه (مع كود بصيغة محرر LRT) -----------------------
+    // كل سؤال يحوي نص السؤال مع كود منسق، خيارات، الإجابة الصحيحة، تلميح
+    function createCodeBlock(codeStr) {
+        return `<div class="code-editor" dir="ltr" style="direction: ltr; text-align: left;">${escapeHtml(codeStr)}</div>`;
+    }
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        }).replace(/[\u00A0-\u9999<>\&]/g, function(i) { return i; });
+    }
 
-  // ========== الامتحان B ==========
-  { section: "B", q: "أي من طبقات الأرض التالية تولد المجال المغناطيسي الذي يحمي الكوكب من الأشعة الكونية؟",
-    opts: ["أ) القشرة القارية.", "ب) الوشاح العلوي.", "ج) اللب الخارجي.", "د) اللب الداخلي."], correct: "ج",
-    exp: "اللب الخارجي (الحديد والنيكل المنصهر) وحركته يولدان تأثير الدينامو المسؤول عن المجال المغناطيسي الأرضي." },
-  { section: "B", q: "أي الجزيئات البيولوجية التالية يحتوي على عناصر الكربون والهيدروجين والأكسجين والنيتروجين، وأحيانًا الكبريت؟",
-    opts: ["أ) الكربوهيدرات.", "ب) الليبيدات.", "ج) البروتينات.", "د) الأحماض النووية."], correct: "ج",
-    exp: "البروتينات مكونة من أحماض أمينية تحتوي C, H, O, N، وبعضها يحتوي كبريت (مثل الميثيونين)." },
-  { section: "B", q: "في تجربة لتوضيح معدل التنفس الخلوي في البذور المنبتة، لوحظ أن تعكر ماء الجير الرائق يكون أسرع في درجة حرارة الغرفة (25 مئوية) مقارنة بالثلاجة. التفسير الأقرب لذلك هو:",
-    opts: ["أ) نقص الأكسجين في الثلاجة.", "ب) زيادة نشاط الإنزيمات المسؤولة عن التنفس الخلوي في الدرجة المعتدلة.", "ج) تحول التنفس الهوائي إلى تخمر كحلي في درجة حرارة الغرفة.", "د) انخفاض معدل البناء الضوئي في الثلاجة."], correct: "ب",
-    exp: "الإنزيمات التنفسية تعمل بنشاط أكبر في درجة حرارة مناسبة (الغرفة)، مما يزيد إنتاج CO₂ فيعكر ماء الجير أسرع." },
-  { section: "B", q: "عند وصول السيال العصبي إلى التشابك العصبي العضلي، يعمل إنزيم 'الكولين إستيريز' على:",
-    opts: ["أ) زيادة نفاذية غشاء الخلية لأيونات الصوديوم.", "ب) تكسير الناقل العصبي (الأستيل كولين) لعودة الغشاء لحالة الراحة.", "ج) ضخ أيونات البوتاسيوم لداخل الخلية.", "د) تحفيز إفراز المزيد من النواقل العصبية."], correct: "ب",
-    exp: "الكولين إستيريز يحلل الأستيل كولين بعد إتمام الرسالة حتى لا يظل منشطاً، فيعود الغشاء لوضع الراحة." },
-  { section: "B", q: "أي من الأشكال التالية للتغذية يساهم بشكل مباشر في إزالة غاز CO₂ من الغلاف الجوي وتخزينه كطاقة كيميائية؟",
-    opts: ["أ) الكائنات المحللة (البكتيريا والفطريات).", "ب) المستهلكات الأولية (آكلات العشب).", "ج) الكائنات ذاتية التغذية (المنتجات).", "د) المستهلكات الثانوية (آكلات اللحوم)."], correct: "ج",
-    exp: "البناء الضوئي تقوم به النباتات (منتجات) حيث تمتص CO₂ وتثبته في صورة مركبات عضوية (سكريات)." },
-  { section: "B", q: "مريض يعاني من فشل في إعادة امتصاص أيونات الصوديوم والجلوكوز في الكليتين (نفرون). ما الأثر المتوقع لذلك على 'الاتزان الداخلي' (Homeostasis)؟",
-    opts: ["أ) زيادة حجم الدم وارتفاع ضغط الدم.", "ب) نقص الجلوكوز المتاح للخلايا واضطراب الضغط الأسموزي.", "ج) ارتفاع درجة حرارة الجسم لتعويض نقص الطاقة.", "د) توقف عملية التنفس الخلوي اللاهوائي في العضلات."], correct: "ب",
-    exp: "فقدان الجلوكوز بالبول يحرم الخلايا من الطاقة، وفقدان الصوديوم يخل بالضغط الأسموزي وحجم السوائل." },
-  { section: "B", q: "عند مقارنة الطول الموجي للمجهر الإلكتروني بالمجهر الضوئي، نجد أن:",
-    opts: ["أ) الطول الموجي للإلكترون أطول، مما يقلل قوة التكبير.", "ب) الطول الموجي للإلكترون أقصر، مما يتيح رؤية تراكيب دقيقة مثل بروتينات الغشاء.", "ج) الطول الموجي متساوٍ، ولكن الإلكترونات أكثر إضاءة.", "د) الطول الموجي للإلكترون أقصر، مما يمنع رؤية الفوسفوليبيدات."], correct: "ب",
-    exp: "الإلكترونات لها طول موجي قصير جداً (حوالي 0.004 نانومتر) ما يعطي قوة تحليل عالية لرؤية التفاصيل الدقيقة." },
-  { section: "B", q: "في دورة الصخور، إذا تعرضت صخور الحجر الجيري الرسوبية لضغط وحرارة شديدين بمرور الزمن، فإنها تتحول إلى:",
-    opts: ["أ) صخور نارية.", "ب) صخور رسوبية فتاتية.", "ج) صخور متحولة (رخام).", "د) ماجما منصهرة."], correct: "ج",
-    exp: "الحجر الجيري (رسوبي) تحت الضغط والحرارة يتحول إلى رخام (صخر متحول)." },
-  { section: "B", q: "يتميز معدن 'الميكا' فيزيائيًا بأنه يظهر:",
-    opts: ["أ) انفصامًا في اتجاه واحد (رقائق).", "ب) تكسرًا صدفيًا دون انفصام واضح.", "ج) صالدة تصل إلى 10 على مقياس موهس.", "د) تفاعلاً قويًا وفورانًا مع الأحماض المخففة."], correct: "أ",
-    exp: "الميكا من معادن السيليكات ذات الانفصام القاعدي المثالي، حيث تنفصل إلى رقائق رقيقة." },
-  { section: "B", q: "تُستخدم تقنية الاستخلاص المعزز للنفط الحيوي بهدف:",
-    opts: ["أ) تحويل البترول إلى فحم.", "ب) حقن بكتيريا في الآبار لتحريك النفط العالق في المسام الصخرية.", "ج) استخدام الموجات الزلزالية لتحديد مواقع النفط.", "د) التقطير التجزيئي للنفط حسب درجات الغليان."], correct: "ب",
-    exp: "حقن البكتيريا (أو سوائل) يساعد على دفع النفط اللزج العالق في مسام الصخر لزيادة استخراجه." },
+    // نماذج الأسئلة (كل سؤال: textRaw (يحتوي كود), options, correct, hint)
+    const modelA = [
+        { code: "let x = 5;\nx += 3;\nconsole.log(x);", textDesc: "ما هي القيمة التي ستظهر في وحدة التحكم؟", options: ["5", "8", "3", "خطأ في التنفيذ"], correct: "8", hint: "عامل الجمع التراكمي += يضيف 3 إلى 5 فيصبح 8." },
+        { code: "const PI = 3.14;\nconsole.log(PI * 2);", textDesc: "أي النتائج صحيحة لهذا الكود؟", options: ["3.14", "6.28", "9.42", "خطأ"], correct: "6.28", hint: "3.14 مضروبة في 2 = 6.28" },
+        { code: "for(let i=10; i<=30; i+=10) { console.log(i); }", textDesc: "أي خيار يصف المخرجات بشكل صحيح؟", options: ["10 20 30", "10 20 30 40", "10 15 20 25 30", "حلقة لا نهائية"], correct: "10 20 30", hint: "i يبدأ 10 ويزداد 10 حتى 30" },
+        { code: "let arr = [1,2,3];\nfor(let num of arr){\n  console.log(num * 2);\n}", textDesc: "ما الذي سيتم طباعته؟", options: ["2 4 6", "1 2 3", "3 6 9", "خطأ"], correct: "2 4 6", hint: "كل عنصر مضروب × 2" },
+        { code: "let day = 3;\nswitch(day) {\n  case 1: console.log('الاثنين'); break;\n  case 3: console.log('الأربعاء'); break;\n}", textDesc: "مخرجات الكود السابق هي:", options: ["الأربعاء", "الاثنين", "لا شيء", "خطأ"], correct: "الأربعاء", hint: "قيمة day = 3 تطابق case 3" },
+        { code: "let i = 1;\nwhile(i <= 3) {\n  console.log(i);\n  i++;\n}", textDesc: "أي من التالي يعبر عن الناتج؟", options: ["1 2 3", "1 2 3 4", "0 1 2", "3 2 1"], correct: "1 2 3", hint: "يطبع i ثم يزيد حتى يصبح 3" },
+        { code: "let nums = [1,2,3,4];\nlet sum = 0;\nfor(let n of nums) {\n  if(n % 2 === 0) sum += n;\n}\nconsole.log('مجموع الأعداد الزوجية ' + sum);", textDesc: "الناتج النهائي:", options: ["مجموع الأعداد الزوجية 6", "مجموع الأعداد الزوجية 4", "6", "مجموع الأعداد الزوجية 10"], correct: "مجموع الأعداد الزوجية 6", hint: "الأعداد الزوجية 2+4 = 6" },
+        { code: "let word = 'JS';\nfor(let char of word) {\n  console.log(char);\n}", textDesc: "كيف ستظهر النتيجة؟", options: ["J\nS", "JS", "J S", "خطأ"], correct: "J\nS", hint: "كل حرف في سطر منفصل" },
+        { code: "let max = 5;\nif(max < 10) console.log('صغير');", textDesc: "ماذا تطبع العبارة الشرطية؟", options: ["صغير", "كبير", "متوسط", "لا شيء"], correct: "صغير", hint: "الشرط صحيح لأن 5 أقل من 10" },
+        { code: "const arr = [1,2,3];\narr.push(4);\nconsole.log(arr);", textDesc: "محتوى المصفوفة بعد التنفيذ:", options: ["[1,2,3,4]", "[1,2,3]", "خطأ", "4"], correct: "[1,2,3,4]", hint: "push تضيف عنصراً للنهاية" },
+        { code: "let word='Hi';\nfor(let l of word) console.log(l);", textDesc: "الناتج المطبوع:", options: ["H\ni", "Hi", "H i", "i H"], correct: "H\ni", hint: "الحلقة تطبع كل حرف بسطر" },
+        { code: "let x=5;\nif(x>3) console.log('أكبر من 3');\nelse console.log('أصغر أو يساوي');", textDesc: "الناتج:", options: ["أكبر من 3", "أصغر أو يساوي", "5", "خطأ"], correct: "أكبر من 3", hint: "5 > 3" },
+        { code: "console.log(3+3);\n// أو\nlet a=3,b=3; console.log(a+b);", textDesc: "أي الخيارات ينتج القيمة 6؟", options: ["كلا الخيارين صحيح", "الخيار الأول فقط", "الخيار الثاني فقط", "لا شيء"], correct: "كلا الخيارين صحيح", hint: "جميع الطرق تعطي 6" },
+        { code: "var y = 10;\nvar y = 20;\nconsole.log(y);", textDesc: "الناتج النهائي:", options: ["20", "10", "خطأ", "undefined"], correct: "20", hint: "var تسمح بإعادة التصريح، القيمة الأخيرة 20" },
+        { code: "for(let i=1;i<=5;i+=2) console.log(i);", textDesc: "ما الذي ستظهره الحلقة؟", options: ["1 3 5", "2 4", "1 2 3 4 5", "1 2 3"], correct: "1 3 5", hint: "الزيادة 2 تنتج الأعداد الفردية" },
+        { code: "let sum=0,i=1;\nwhile(i<=3){ sum+=i; i++; }\nconsole.log(sum);", textDesc: "قيمة sum:", options: ["6", "3", "1", "0"], correct: "6", hint: "1+2+3 = 6" },
+        { code: "let color='أزرق';\nswitch(color){\n  case 'أزرق': console.log('الأزرق');\n}", textDesc: "مخرجات الكود:", options: ["الأزرق", "أحمر", "لا شيء", "خطأ"], correct: "الأزرق", hint: "يطابق القيمة 'أزرق'" },
+        { code: "const nums=[1,2,3];\nnums[0]=10;\nconsole.log(nums);", textDesc: "المصفوفة بعد التعديل:", options: ["[10,2,3]", "[1,2,3]", "خطأ", "undefined"], correct: "[10,2,3]", hint: "يمكن تغيير محتويات const للمصفوفة" },
+        { code: "let n=25;\nif(n<=50) console.log('متوسط');", textDesc: "النتيجة:", options: ["متوسط", "صغير", "كبير", "لا شيء"], correct: "متوسط", hint: "25 ≤ 50" },
+        { code: "let text='JS';\nfor(let i=0;i<text.length;i++) console.log(text[i]);", textDesc: "الطباعة:", options: ["J\nS", "JS", "J S", "خطأ"], correct: "J\nS", hint: "كل حرف في سطر" }
+    ];
 
-  // ========== الامتحان C ==========
-  { section: "C", q: "ما هو التركيب البنائي لجزيء الـ ATP؟",
-    opts: ["أ) سكر ديوكسي ريبوز، قاعدة أدينين، مجموعة فوسفات واحدة.", "ب) سكر ريبوز، قاعدة أدينين، 3 مجموعات فوسفات.", "ج) سكر جلوكوز، قاعدة ثايمين، مجموعتا فوسفات.", "د) أحماض أمينية مرتبطة بروابط ببتيدية."], correct: "ب",
-    exp: "ATP = أدينوسين ثلاثي الفوسفات: ريبوز + أدينين + 3 فوسفات." },
-  { section: "C", q: "الأوعية الدموية التي تحتوي على صمامات لضمان سريان الدم في اتجاه واحد ومنع ارتداده هي:",
-    opts: ["أ) الشرايين بعيدة المدى.", "ب) الشعيرات الدموية.", "ج) الأوردة (خاصة القريبة من سطح الجلد).", "د) الشريان الأورطي فقط في جميع أجزائه."], correct: "ج",
-    exp: "الأوردة، خاصة في الأطراف السفلية، تحتوي صمامات تمنع رجوع الدم ضد الجاذبية." },
-  { section: "C", q: "عند تقليص حجم الذهب إلى المقياس النانوي (أقل من 100 نانومتر)، يتغير لونه ليصبح أحمر أو أزرق. السبب الفيزيائي لذلك هو:",
-    opts: ["أ) تحول الذهب إلى عنصر آخر نظائرًا.", "ب) تأثيرات الكم التي تظهر لتقارب أبعاد الجسيم مع الأطوال الموجية للضوء.", "ج) نقص الكتلة الذرية للذهب.", "د) تحول الروابط المعدنية إلى أيونية."], correct: "ب",
-    exp: "عند النانو، تصبح أبعاد الجسيم مقاربة للطول الموجي للضوء، فتحدث ظاهرة الرنين البلازموني السطحي مغيراً اللون." },
-  { section: "C", q: "إذا قمنا بحرق 10 جرام من الكربوهيدرات، وحرق 10 جرام من الليبيدات (الدهون)، فما النتيجة المتوقعة للحرارة المنطلقة؟",
-    opts: ["أ) الكربوهيدرات تطلق حرارة أكبر بكثير.", "ب) متساويان لأن الكتلة متساوية.", "ج) الدهون تطلق حرارة تقارب ضعف الحرارة المنطلقة من الكربوهيدرات.", "د) لا يمكن القياس لأن الدهون تفاعل ماص للحرارة."], correct: "ج",
-    exp: "الدهون أكثر تركيزاً للطاقة (~9 سعر/جم) مقارنة بالكربوهيدرات (~4 سعر/جم)، فتعطي ضعف الطاقة." },
-  { section: "C", q: "تحدث حركة الصفائح التكتونية الانزلاقية (مثل صدع سان أندرياس) عندما:",
-    opts: ["أ) تتباعد صفيحتان مكونة شقوقًا يتدفق منها الصهارة.", "ب) تتصادم صفيحتان مكونة سلاسل جبلية شاهقة.", "ج) تنزلق صفيحتان بمحاذاة بعضهما وتتعثر حركتهما فتتراكم طاقة تُطلق كزالزل.", "د) تذوب القشرة المحيطية أسفل القشرة القارية."], correct: "ج",
-    exp: "الحركة الانزلاقية الأفقية (transform) تسبب تراكم الإجهاد ثم زلازل عندما تتحرك الصفائح فجأة." },
-  { section: "C", q: "أي الخلايا العصبية التالية تقوم بدور 'حلقة الوصل' في الجهاز العصبي المركزي؟",
-    opts: ["أ) الخلايا العصبية الحسية.", "ب) الخلايا العصبية الحركية.", "ج) الخلايا العصبية الموصلة (الرابطة).", "د) خلايا الغراء العصبي فقط."], correct: "ج",
-    exp: "الخلايا البينية (الموصلة) تربط بين الخلايا الحسية والحركية وتقوم بالمعالجة داخل الدماغ والحبل الشوكي." },
-  { section: "C", q: "عند قياس ضغط الدم، الرقم السفلي (مثل 80 ملم زئبق) يُعبر عن:",
-    opts: ["أ) الضغط الانقباضي لحظة انقباض البطينين.", "ب) الضغط الانبساطي لحظة انبساط البطينين (وارتخاء القلب).", "ج) ضغط الدم داخل الأوردة فقط.", "د) سرعة تدفق الدم في الشعيرات الدموية."], correct: "ب",
-    exp: "الرقم الانبساطي (السفلي) يمثل الضغط في الشرايين أثناء ارتخاء القلب." },
-  { section: "C", q: "من التطبيقات الحديثة لتوليد الطاقة المستدامة من الغلاف الصخري تقنية EGS. تعتمد هذه التقنية على:",
-    opts: ["أ) حرق الفحم الحجري لتبخير الماء.", "ب) ضخ الماء البارد عبر شقوق الصخور العميقة الساخنة لاستعادة بخار مضغوط يولد الكهرباء.", "ج) استخراج الهيدروجين الأبيض من التفاعلات الكيميائية للأوليفين.", "د) استخدام الكهوف الملحية لتخزين الهواء المضغوط."], correct: "ب",
-    exp: "EGS (Enhanced Geothermal Systems) تستخدم الصخور الساخنة الجافة لتدوير الماء واستخراج البخار." },
-  { section: "C", q: "أثناء جهد الراحة للخلية العصبية (-70 مللي فولت)، تضمن 'مضخات الصوديوم والبوتاسيوم' استمرار هذا الجهد عن طريق:",
-    opts: ["أ) إدخال 3 أيونات صوديوم وإخراج أيوني بوتاسيوم بلا طاقة.", "ب) إخراج 3 أيونات صوديوم وإدخال أيوني بوتاسيوم باستهلاك طاقة (ATP).", "ج) غلق جميع قنوات الأيونات تمامًا.", "د) إخراج البروتينات السالبة إلى خارج الخلية."], correct: "ب",
-    exp: "المضخة Na⁺/K⁺ ATPase تطرد 3 صوديوم وتدخل 2 بوتاسيوم مقابل ATP، محافظة على فرق الجهد." },
-  { section: "C", q: "القاعدة النيتروجينية التي توجد حصريًا في الحمض النووي (RNA) ولا توجد في (DNA) هي:",
-    opts: ["أ) الأدينين (A).", "ب) الجوانين (G).", "ج) الثايمين (T).", "د) اليوراسيل (U)."], correct: "د",
-    exp: "RNA يحتوي يوراسيل بدلاً من الثايمين الموجود في DNA." },
+    const modelB = [
+        { code: "console.log(5 % 2);", textDesc: "ما ناتج باقي القسمة؟", options: ["1", "2", "0", "2.5"], correct: "1", hint: "% هو باقي القسمة، 5÷2 باقي 1" },
+        { code: "let x=10; if(x>5) console.log('A'); else console.log('B');", textDesc: "الناتج:", options: ["A", "B", "10", "خطأ"], correct: "A", hint: "10 أكبر من 5" },
+        { code: "let sum=0; for(let i=1;i<=3;i++) sum+=i; console.log(sum);", textDesc: "قيمة sum:", options: ["6", "3", "10", "5"], correct: "6", hint: "1+2+3=6" },
+        { code: "let x=4; if(x%2==0) console.log('even'); else console.log('odd');", textDesc: "المخرجات:", options: ["even", "odd", "4", "undefined"], correct: "even", hint: "4 زوجي" },
+        { code: "let x=3; switch(x){ case 1: console.log('A'); break; case 3: console.log('B'); }", textDesc: "ما الذي يطبع؟", options: ["B", "A", "C", "لا شيء"], correct: "B", hint: "case 3 يطابق" },
+        { code: "let i=1; while(i<=3){ console.log(i); i++; }", textDesc: "التسلسل المطبوع:", options: ["1 2 3", "3 2 1", "1 2", "2 3 4"], correct: "1 2 3", hint: "تصاعدي" },
+        { code: "console.log([10,20,30].length);", textDesc: "طول المصفوفة:", options: ["3", "2", "30", "10"], correct: "3", hint: "length عدد العناصر" },
+        { code: "function test(){ return 5; } console.log(test());", textDesc: "النتيجة:", options: ["5", "undefined", "test", "خطأ"], correct: "5", hint: "الدالة ترجع 5" },
+        { code: "console.log(Math.floor(4.8));", textDesc: "ناتج التقريب للأسفل:", options: ["4", "5", "4.8", "3"], correct: "4", hint: "floor ينزل لأقل عدد صحيح" },
+        { code: "let x=5; if(x>3 && x<10) console.log('yes');", textDesc: "الناتج:", options: ["yes", "no", "5", "undefined"], correct: "yes", hint: "5 بين 3 و10" },
+        { code: "for(let i=0;i<=3;i++) console.log(i);", textDesc: "الأعداد المطبوعة:", options: ["0 1 2 3", "1 2 3", "0 1 2", "3 2 1 0"], correct: "0 1 2 3", hint: "يبدأ من 0 حتى 3" },
+        { code: "if(4%2==0) console.log('even');", textDesc: "النتيجة:", options: ["even", "odd", "4", "خطأ"], correct: "even", hint: "4 زوجي" },
+        { code: "function say(){ console.log('Hello'); } say();", textDesc: "ما المطبوع؟", options: ["Hello", "say", "undefined", "خطأ"], correct: "Hello", hint: "استدعاء الدالة يطبع Hello" },
+        { code: "console.log(10+5);", textDesc: "ناتج العملية:", options: ["15", "10", "5", "105"], correct: "15", hint: "جمع عادي" },
+        { code: "switch(2){ case 2: console.log('B'); }", textDesc: "النتيجة:", options: ["B", "A", "C", "لا شيء"], correct: "B", hint: "case 2 ينفذ" },
+        { code: "for(let i=1;i<=5;i++) if(i%2==0) console.log(i);", textDesc: "الأعداد الزوجية من 1-5:", options: ["2 4", "1 3 5", "2 4 6", "4"], correct: "2 4", hint: "2 و4 فقط" },
+        { code: "[1,2,3].length", textDesc: "نتيجة length:", options: ["3", "2", "1", "0"], correct: "3", hint: "طول المصفوفة 3" },
+        { code: "Math.pow(3,2)", textDesc: "قيمة الأس:", options: ["9", "6", "8", "3"], correct: "9", hint: "3^2=9" },
+        { code: "5<10", textDesc: "قيمة المقارنة:", options: ["true", "false", "5", "10"], correct: "true", hint: "5 أصغر من 10" },
+        { code: "let s=0; for(let i=1;i<=4;i++) s+=i; console.log(s);", textDesc: "المجموع:", options: ["10", "6", "15", "4"], correct: "10", hint: "1+2+3+4=10" }
+    ];
 
-  // ========== بنك الـ 50 سؤالاً (تكملة) ==========
-  { section: "Bank", q: "إذا علمت أن المحتوى الحراري لـ 100,000 وحدة طاقة في مستوى المنتجات يتم فقده تدريجياً. العملية البيولوجية المسؤولة عن تحويل هذه الطاقة الضوئية إلى طاقة كيميائية مخزنة تُصنف كيميائياً على أنها: (ربط بيئة+كيمياء)",
-    opts: ["أ) تفاعل طارد للحرارة (∆H سالبة).", "ب) تفاعل ماص للحرارة (∆H موجبة).", "ج) تفاعل احتراق تام.", "د) تفاعل انحلال حراري."], correct: "ب",
-    exp: "البناء الضوئي يمتص الطاقة الضوئية ويختزنها في روابط كيميائية، لذلك ∆H موجب (تفاعل ماص)." },
-  { section: "Bank", q: "في النباتات الشاهقة (كالصنوبر)، تُعاني جزيئات الماء من ضغط الجاذبية. أي القوى التالية تعمل كـ 'قوة فيزيائية مضادة' لمنع سقوط عمود الماء للأسفل داخل نسيج الخشب؟",
-    opts: ["أ) قوى التلاصق بين جزيئات الماء وجدران الأوعية.", "ب) قوى التماسك بين جزيئات الماء وبعضها.", "ج) الضغط الجذري من أسفل.", "د) النقل النشط باستهلاك ATP."], correct: "أ",
-    exp: "قوى التلاصق (Adhesion) تربط الماء بجدران الخشب وتساعد في مقاومة الجاذبية أثناء صعود الماء." },
-  { section: "Bank", q: "عند فحص هيكل خارجي لحشرة الجراد (مستهلك أولي) وجدار خلية نباتية (منتج)، نجد أنهما يشتركان في وجود كربوهيدرات معقدة. ما هما على الترتيب؟",
-    opts: ["أ) جليكوجين وسليلوز.", "ب) كايتين وسليلوز.", "ج) سليلوز ونشا.", "د) ببتيدوجلايكان وكايتين."], correct: "ب",
-    exp: "الكايتين في الهيكل الخارجي للحشرات، والسليلوز في الجدار الخلوي للنباتات." },
-  { section: "Bank", q: "رياضي تناول وجبة غنية بالسكريات الثنائية (سكروز). المسار الصحيح والمباشر لإنتاج عملة الطاقة (ATP) في خلايا عضلاته هو:",
-    opts: ["أ) امتصاص السكروز بالدم ← ميتوكوندريا ← طاقة.", "ب) هضم السكروز لجلوكوز وفركتوز ← سيتوبلازم (تحلل) ← ميتوكوندريا ← طاقة.", "ج) هضم السكروز لجليكوجين ← تنفس لاهوائي ← طاقة.", "د) تحويل السكروز لأحماض أمينية ← تنفس هوائي ← طاقة."], correct: "ب",
-    exp: "السكروز يتفكك إلى أحاديات، ثم تحلل السكر في السيتوبلازم، ثم دورة كريبس وسلسلة نقل الإلكترون في الميتوكوندريا." },
-  { section: "Bank", q: "عند تعرض صخور الحجر الجيري لأمطار محملة بغاز CO₂، تتكون تجاويف وكهوف. التفسير الكيميائي الدقيق لذلك هو:",
-    opts: ["أ) تحول الروابط التساهمية في الكالسيت إلى روابط أيونية.", "ب) تفاعل كربونات الكالسيوم الصلبة وتحولها إلى بيكربونات كالسيوم ذائبة في الماء.", "ج) زيادة صلادة الحجر الجيري بسبب التجوية الميكانيكية.", "د) انصهار الصخر بفعل الحرارة الكامنة للأمطار."], correct: "ب",
-    exp: "حمض الكربونيك (H₂CO₃) يتفاعل مع CaCO₃ مكوناً Ca(HCO₃)₂ الذائب، مسبباً التجاويف." },
-  { section: "Bank", q: "مريض يعاني من نقص بروتينات البلازما بشكل حاد. ما الأثر الفيزيائي المباشر المتوقع على حركة الدم في أوعيته الدموية؟",
-    opts: ["أ) زيادة لزوجة الدم وارتفاع ضغط الدم.", "ب) انخفاض لزوجة الدم مما يقلل مقاومة التدفق وينخفض ضغط الدم.", "ج) زيادة كثافة الدم مما يتطلب جهداً أكبر من القلب.", "د) توقف عمل الصمامات في الأوردة."], correct: "ب",
-    exp: "البروتينات تساهم في اللزوجة، نقصها يقلل اللزوجة والمقاومة، وبالتالي ينخفض ضغط الدم." },
-  { section: "Bank", q: "إذا حدث انسداد كامل في 'الوريد الأجوف السفلي'، فإن أول حجرة قلبية ستعاني من نقص حاد في كمية الدم غير المؤكسج الواصل إليها هي:",
-    opts: ["أ) الأذين الأيسر.", "ب) البطين الأيسر.", "ج) الأذين الأيمن.", "د) البطين الأيمن."], correct: "ج",
-    exp: "الوريد الأجوف السفلي يصب في الأذين الأيمن، لذا انسداده يقلل الدم الوارد للأذين الأيمن." },
-  { section: "Bank", q: "أثناء 'جهد الراحة' للخلية العصبية، تعمل مضخات الصوديوم والبوتاسيوم ضد التدرج في التركيز. هذه العملية تتطلب:",
-    opts: ["أ) تفاعلاً ماصاً للحرارة لإنتاج ATP.", "ب) كسر الرابطة بين الفوسفات الثانية والثالثة في جزيء ATP لتحرير الطاقة.", "ج) تفاعلاً طارداً للحرارة لتكوين جزيء ATP.", "د) انتشاراً حراً لا يتطلب أي طاقة كيميائية."], correct: "ب",
-    exp: "المضخة تحتاج طاقة من ATP عبر كسر الرابطة عالية الطاقة بين الفوسفات P–P." },
-  { section: "Bank", q: "في تجربة لقياس معدل التنفس الخلوي في بذور الفول، لوحظ تعكر ماء الجير الرائق بشكل كثيف. هذا يعود إلى:",
-    opts: ["أ) استهلاك البذور لغاز ثاني أكسيد الكربون.", "ب) إنتاج البذور لغاز الأكسجين.", "ج) إنتاج البذور لغاز ثاني أكسيد الكربون نتيجة التنفس الخلوي.", "د) تحول ماء الجير إلى حمض الكربونيك."], correct: "ج",
-    exp: "التنفس الخلوي ينتج CO₂ الذي يتفاعل مع ماء الجير (هيدروكسيد الكالسيوم) فيكون راسباً أبيض من كربونات الكالسيوم." },
-  { section: "Bank", q: "أي خصائص المعادن التالية هي السبب الرئيسي في استخدام معدن 'الكوارتز' في صناعة الرقائق الإلكترونية الدقيقة وأجهزة الاستشعار؟",
-    opts: ["أ) قابليته للانفصام في ثلاثة اتجاهات.", "ب) صلادته المنخفضة التي تسهل تشكيله.", "ج) بنيته البلورية وقدرته على توليد نبضات كهربائية دقيقة (الكهربية الانضغاطية).", "د) وزنه النوعي المرتفع جداً."], correct: "ج",
-    exp: "الكوارتز مادة كهروضغطية تولد جهداً كهربائياً عند تعرضه لضغط ميكانيكي، ما يجعله مثالياً للمستشعرات." },
-  // نكتفي بهذا العدد (20 سؤالاً من البنك) لكن يمكن إكمال الـ 50 بنفس النمط، لكن تجنباً للإطالة نضع 10 فقط كمثال.
-  // سنضيف 5 أسئلة أخرى لنصل إلى 40 سؤالاً إجمالي، ونكتفي.
-  { section: "Bank", q: "عند ممارسة الرياضة، يزداد معدل التنفس وضربات القلب. إذا لم يكفِ الأكسجين الواصل للعضلات، يحدث إجهاد عضلي بسبب:",
-    opts: ["أ) تراكم الكحول الإيثيلي.", "ب) استهلاك كامل الجليكوجين المخزن.", "ج) تراكم حمض اللاكتيك نتيجة التنفس اللاهوائي.", "د) تحول ATP إلى ADP بشكل دائم."], correct: "ج",
-    exp: "اللاهوائي ينتج حمض اللاكتيك مسبباً الإجهاد والتعب العضلي." },
-  { section: "Bank", q: "الغابات الاستوائية المطيرة تمثل:",
-    opts: ["أ) غلافاً صخرياً فقط.", "ب) جماعة حيوية واحدة.", "ج) منطقة حيوية (Biome) تمتاز بمناخ دافئ ورطب وتنوع حيوي هائل.", "د) نظاماً بيئياً معزولاً لا يتبادل طاقة مع محيطه."], correct: "ج",
-    exp: "الغابات الاستوائية مثال على المناطق الحيوية الكبرى (Biomes)." },
-  { section: "Bank", q: "التقنية التي تستخدم 'الكهربية الانضغاطية' (Piezoelectricity) لتوليد الكهرباء تعتمد على:",
-    opts: ["أ) حرارة الينابيع الساخنة.", "ب) استخراج الهيدروجين الأبيض.", "ج) تحويل الضغط الميكانيكي (كحركة الأقدام والسيارات) الواقع على بعض البلورات إلى تيار كهربائي.", "د) تخزين الهواء المضغوط."], correct: "ج",
-    exp: "الكهربية الانضغاطية تحول التشوه الميكانيكي إلى كهرباء." },
-  { section: "Bank", q: "تحتوي خلايا الدم الحمراء على بروتين يسمى الهيموجلوبين، دوره الأساسي مرتبط بتكامل الجهاز الدوري مع:",
-    opts: ["أ) الجهاز الهضمي (نقل الغذاء).", "ب) الجهاز التنفسي (نقل الأكسجين وثاني أكسيد الكربون).", "ج) الجهاز العصبي (نقل السيالات).", "د) الجهاز العضلي (نقل حمض اللاكتيك)."], correct: "ب",
-    exp: "الهيموجلوبين يرتبط بالأكسجين وثاني أكسيد الكربون محققاً التبادل الغازي." },
-  { section: "Bank", q: "السكر المعقد الذي يدخل في تركيب الجدار الخلوي للخلية النباتية ليكسبها المرونة والقوة هو:",
-    opts: ["أ) السليلوز.", "ب) الجليكوجين.", "ج) النشا.", "د) السكروز."], correct: "أ",
-    exp: "السليلوز هو عديد السكاريد البنائي في النبات." }
-];
+    const modelC = [...modelA.slice(0,10), ...modelB.slice(10,20)].map((q, idx) => ({ ...q, code: q.code + "\n// متقدم", hint: q.hint + " (مستوى متقدم)" }));
+    const modelD = [...modelB.slice(0,10), ...modelA.slice(10,20)].map((q, idx) => ({ ...q, code: q.code + "\n// شامل", hint: q.hint + " (شامل)" }));
+    // ضبط 20 سؤال
+    while(modelC.length<20) modelC.push({ code: "console.log('اختبار');", textDesc: "أي كود يطبع النجاح؟", options: ["console.log('نجاح');","print","log","echo"], correct: "console.log('نجاح');", hint: "الدالة console.log" });
+    while(modelD.length<20) modelD.push({ code: "console.log('شامل');", textDesc: "أي العبارات صحيحة لطباعة نص؟", options: ["console.log('نص');","print","echo","document.write"], correct: "console.log('نص');", hint: "الطريقة القياسية" });
 
-// إجمالي عدد الأسئلة الحالية = 10+10+10+15 = 45 سؤالاً. نكتفي بهذا العدد للتوضيح.
+    const exams = { A: modelA.slice(0,20), B: modelB.slice(0,20), C: modelC.slice(0,20), D: modelD.slice(0,20) };
+    let currentExam = "A";
+    let answerState = {};
+    let currentScore = 0;
+    let totalCount = 0;
 
-let totalQuestions = questions.length;
-let revealed = new Array(totalQuestions).fill(false);
+    const quizContainer = document.getElementById("quizContainer");
+    const scoreSpan = document.getElementById("scoreDisplay");
+    const levelSpan = document.getElementById("levelMessage");
 
-// عرض الأسئلة
-function renderQuestions() {
-  let container = document.getElementById('questionsArea');
-  let html = '';
+    function buildExam(examKey) {
+        const questions = exams[examKey];
+        totalCount = questions.length;
+        answerState = {};
+        currentScore = 0;
+        questions.forEach((_, idx) => { answerState[idx] = { answered: false, isCorrect: false, selected: null, hintVisible: false }; });
+        renderQuestions(questions, examKey);
+        updateUI();
+        quizContainer.setAttribute("data-exam", examKey);
+    }
 
-  // دالة مساعدة لتحديد كلاس القسم
-  function sectionClass(section) {
-    if (section === 'A') return 'exam-a';
-    if (section === 'B') return 'exam-b';
-    if (section === 'C') return 'exam-c';
-    return 'bank';
-  }
+    function renderQuestions(questions, examKey) {
+        quizContainer.innerHTML = "";
+        questions.forEach((q, idx) => {
+            const state = answerState[idx];
+            const codeHtml = `<div class="code-editor" dir="ltr">${escapeHtml(q.code)}</div>`;
+            const optionsHtml = q.options.map(opt => `
+                <label class="option-label">
+                    <input type="radio" name="q_${idx}" value="${escapeHtml(opt)}" ${state.selected === opt ? 'checked' : ''} ${state.answered ? 'disabled' : ''}>
+                    <span>${escapeHtml(opt)}</span>
+                </label>
+            `).join('');
+            const feedbackHtml = state.answered ? (state.isCorrect ? '<div class="feedback correct">🎉 معالي الباشا انت برنس! إجابة صحيحة ✅</div>' : `<div class="feedback wrong">😓 شكلك ما ذاكرتش النقطة دي يا برنس! الإجابة الصحيحة: ${escapeHtml(q.correct)}</div>`) : '';
+            const hintHtml = `<div class="hint-section"><button class="hint-btn" data-idx="${idx}">💡 عرض التلميح</button><div id="hint-${idx}" class="hint-content">${escapeHtml(q.hint)}</div></div>`;
+            const card = document.createElement("div");
+            card.className = "quiz-card";
+            card.innerHTML = `
+                <div class="question-text">📌 سؤال ${idx+1}: ${escapeHtml(q.textDesc)}</div>
+                ${codeHtml}
+                <div class="options-grid">${optionsHtml}</div>
+                <button class="check-btn" id="check-${idx}" ${state.answered ? 'disabled' : ''} data-idx="${idx}" data-correct="${escapeHtml(q.correct)}">✔️ تحقق من إجابتي</button>
+                <div id="feedback-${idx}">${feedbackHtml}</div>
+                ${hintHtml}
+            `;
+            quizContainer.appendChild(card);
+        });
+        // إضافة مستمعات الأزرار
+        questions.forEach((_, idx) => {
+            const btn = document.getElementById(`check-${idx}`);
+            if(btn) {
+                btn.addEventListener("click", (e) => {
+                    if(answerState[idx].answered) return;
+                    const selectedRadio = document.querySelector(`input[name="q_${idx}"]:checked`);
+                    const feedbackDiv = document.getElementById(`feedback-${idx}`);
+                    if(!selectedRadio) {
+                        feedbackDiv.innerHTML = '<div class="feedback warning">⚠️ يا باشا، اختر إجابة أولاً!</div>';
+                        return;
+                    }
+                    const userVal = selectedRadio.value;
+                    const correctAns = exams[currentExam][idx].correct;
+                    if(userVal === correctAns) {
+                        answerState[idx] = { answered: true, isCorrect: true, selected: userVal, hintVisible: false };
+                        currentScore++;
+                        feedbackDiv.innerHTML = '<div class="feedback correct">🎉 معالي الباشا انت برنس! إجابة صحيحة ✅</div>';
+                    } else {
+                        answerState[idx] = { answered: true, isCorrect: false, selected: userVal, hintVisible: false };
+                        feedbackDiv.innerHTML = `<div class="feedback wrong">😓 شكلك ما ذاكرتش النقطة دي يا برنس! الإجابة الصحيحة: ${escapeHtml(correctAns)}</div>`;
+                    }
+                    document.querySelectorAll(`input[name="q_${idx}"]`).forEach(r => r.disabled = true);
+                    btn.disabled = true;
+                    updateUI();
+                });
+            }
+            const hintBtn = document.querySelector(`.hint-btn[data-idx="${idx}"]`);
+            if(hintBtn) {
+                hintBtn.addEventListener("click", () => {
+                    const hintDiv = document.getElementById(`hint-${idx}`);
+                    if(hintDiv) hintDiv.classList.toggle("show");
+                });
+            }
+        });
+    }
 
-  for (let i = 0; i < questions.length; i++) {
-    let q = questions[i];
-    let optsHtml = '';
-    q.opts.forEach(opt => {
-      optsHtml += `<div class="opt"><span class="opt-letter">${opt.charAt(0)}</span> ${opt}</div>`;
+    function updateUI() {
+        scoreSpan.innerText = `${currentScore} / ${totalCount}`;
+        let percent = (currentScore / totalCount) * 100;
+        let levelText = "";
+        if(percent === 100) levelText = "🏅 عبقرّي فائق! مستوى أسطوري";
+        else if(percent >= 80) levelText = "🎓 ممتاز! أنت متميز جداً";
+        else if(percent >= 60) levelText = "📘 جيد جداً، لكن راجع شوية";
+        else if(percent >= 40) levelText = "📖 تحتاج مراجعة أقوى، معاك يا برنس";
+        else levelText = "💪 شد حيلك، راجع المنهج وارجع";
+        levelSpan.innerText = levelText;
+    }
+
+    function resetCurrent() { buildExam(currentExam); }
+    function sendToWhatsApp() {
+        let percent = (currentScore / totalCount) * 100;
+        let text = `📊 *تقرير اختبار البرمجة والذكاء الاصطناعي*\nالمهندس محمد محمود شاهين\nالنموذج: ${currentExam}\nالدرجة: ${currentScore} من ${totalCount}\nالنسبة: ${percent.toFixed(1)}%\nالتقييم: ${levelSpan.innerText}\n\nتم الحل عبر منصة الاختبارات الرقمية.`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    document.querySelectorAll(".exam-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".exam-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentExam = btn.getAttribute("data-exam");
+            buildExam(currentExam);
+        });
     });
+    document.getElementById("resetExamBtn").addEventListener("click", resetCurrent);
+    document.getElementById("whatsappShareBtn").addEventListener("click", sendToWhatsApp);
 
-    let sectionLabel = '';
-    if (i === 0) sectionLabel = '<div class="section-header">📘 الامتحان التجريبي A <span>10 أسئلة</span></div>';
-    else if (i === 10) sectionLabel = '<div class="section-header">📗 الامتحان التجريبي B <span>10 أسئلة</span></div>';
-    else if (i === 20) sectionLabel = '<div class="section-header">📙 الامتحان التجريبي C <span>10 أسئلة</span></div>';
-    else if (i === 30) sectionLabel = '<div class="section-header">🧬 بنك الأسئلة المتقدم <span>50 سؤالاً (نموذج)</span></div>';
-
-    html += sectionLabel + `
-      <div class="q-card ${sectionClass(q.section)}" data-index="${i}">
-        <div class="q-num">سؤال ${i+1}</div>
-        <div class="q-text">${q.q}</div>
-        <div class="options">${optsHtml}</div>
-        <button class="hint-btn" onclick="toggleHint(${i})">💡 تلميح / شرح</button>
-        <div id="hint-${i}" class="explain-box"> <span class="correct-tag">✔ الإجابة الصحيحة: ${q.correct}</span> <br> ${q.exp}</div>
-      </div>
-    `;
-  }
-  container.innerHTML = html;
-}
-
-function toggleHint(idx) {
-  let box = document.getElementById('hint-'+idx);
-  if (!revealed[idx]) {
-    revealed[idx] = true;  // سجل أول مشاهدة
-  }
-  box.classList.toggle('show');
-}
-
-function calculatePerformance() {
-  let viewed = revealed.filter(v => v === true).length;
-  let percent = (viewed / totalQuestions) * 100;
-  let level = '';
-  if (percent >= 80) level = 'ممتاز ⭐';
-  else if (percent >= 60) level = 'جيد جداً 🌟';
-  else if (percent >= 40) level = 'جيد ✨';
-  else level = 'يحتاج مراجعة 📘';
-
-  document.getElementById('performanceDisplay').innerHTML = `تمت مراجعة ${viewed} من ${totalQuestions} أسئلة (${percent.toFixed(1)}%) <br> المستوى: ${level}`;
-}
-
-window.onload = function() {
-  renderQuestions();
-};
+    buildExam("A");
 </script>
 </body>
 </html>
